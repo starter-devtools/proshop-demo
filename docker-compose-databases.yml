@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+  app-db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: P@ssword
+      PG_DATA: /data/postgres
+      PGPORT: 5432
+
+  it-db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    ports:
+      - "5433:5433"
+    environment:
+      POSTGRES_PASSWORD: docker
+      PGPORT: 5433
