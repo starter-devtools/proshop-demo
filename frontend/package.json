@@ -9,14 +9,15 @@
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
-    "sass": "^1.69.7",
-    "typescript": "^5.3.3"
+    "sass": "^1.69.7"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.23.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
+    "@types/node": "^20.10.6",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -25,14 +26,27 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "jest-environment-jsdom": "^29.7.0",
+    "svg-jest": "^1.0.1",
+    "ts-jest": "^29.1.1",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-plugin-env-compatible": "^2.0.1",
+    "vite-tsconfig-paths": "^4.2.3"
   },
   "scripts": {
     "start": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --colors"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

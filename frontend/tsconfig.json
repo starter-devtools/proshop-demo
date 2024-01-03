@@ -11,6 +11,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "esModuleInterop": true,
     "jsx": "react-jsx",
 
     /* Linting */
@@ -22,5 +23,6 @@
     "forceConsistentCasingInFileNames": true,
   },
   "include": ["src"],
+  "exclude": ["**/*.test.*", "**/__mocks__/*", "**/__tests__/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
