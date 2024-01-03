@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: proshop-services
+    environment: ${ENV:localhost}
+  servlet:
+    multipart:
+      max-file-size: 50MB
+#  mail:
+#    host: "${server.host}"
+#    port: 1025
+#    username: hello
+#    password: hello
+#    properties:
+#      mail:
+#        smtp:
+#          ssl:
+#            trust: "*"
+#          auth: false
+#          starttls:
+#            enable: false
+#          connectiontimeout: 5000
+#          timeout: 3000
+#          writetimeout: 5000
+
+server:
+  servlet:
+    context-path: /proshop
+  error:
+    include-message: always # allows you to change the exception handling messages
+    include-binding-errors: always
+  port: 8080
+
+api:
+  version:
+    one: "/api/v1"
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
+
+logging:
+  include-application-name: true
