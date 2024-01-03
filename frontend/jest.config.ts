@@ -11,7 +11,7 @@ const jestConfig = async (): Promise<Config.InitialOptions> => {
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx)$",
     moduleNameMapper : {
       '^.+\\.svg$': 'svg-jest',
-      '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/tests/__mocks__/fileMock.js',
+      '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/tests/__mocks__/fileMock.ts',
       "^.+\\.(css|less|scss)$": "babel-jest"
     },
     transform: {
