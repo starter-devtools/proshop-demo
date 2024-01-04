@@ -1,10 +1,12 @@
 package com.sdt.proshop.models
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import java.math.BigDecimal
 
+@Document("products")
 class Product(
-    @JsonProperty("_id") val id: String? = null,
+    @Id val id: String? = null,
     var name: String,
     var image: String,
     var description: String,

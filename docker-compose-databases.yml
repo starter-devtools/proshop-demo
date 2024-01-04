@@ -1,21 +1,10 @@
 version: '3.5'
 services:
-  app-db:
-    image: postgres:15-alpine
-    restart: unless-stopped
-    ports:
-      - "5432:5432"
+  proshop-db:
+    image: mongo:latest
+    restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: P@ssword
-      PG_DATA: /data/postgres
-      PGPORT: 5432
-
-  it-db:
-    image: postgres:15-alpine
-    restart: unless-stopped
+      MONGO_INITDB_ROOT_USERNAME: docker
+      MONGO_INITDB_ROOT_PASSWORD: docker
     ports:
-      - "5433:5433"
-    environment:
-      POSTGRES_PASSWORD: docker
-      PGPORT: 5433
+      - "27017:27017"
