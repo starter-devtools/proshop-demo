@@ -1,37 +1,22 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem } from "react-bootstrap";
 import {Rating} from "../components/Rating";
-import products from "../data/products";
 import axios from "axios";
-import { Product } from "../common/PropTypes";
+import { ProductResponse, initialProduct } from "../api/ProductResponse";
 
 export const ProductPage = () => {
-//   const [product, setProduct] = useState<Product>({
-//     _id: '',
-//     name: '',
-//     image: '',
-//     description: '',
-//     brand: '',
-//     category: '',
-//     price: 0,
-//     countInStock: 0,
-//     rating: 0,
-//     numReviews: 0
-//   });
+  const [product, setProduct] = useState<ProductResponse>(initialProduct);
 
   const { id: productId } = useParams();
-  /* eslint-disable */
-  const product = products.find((p: Product) => p._id === productId)!;
-
-//   useEffect(() => {
-//     const fetchProduct = async () => {
-//       const { data } = await axios.get(`/api/products/${productId}`);
-//       setProduct(data);
-//     };
-//     fetchProduct();
-//   }, [productId]); //re-render component if different ID
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${productId}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [productId]); //re-render component if different ID
 
   return <>
     <Link className="btn btn-light my-3" to='/'>Go Back</Link>
