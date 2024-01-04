@@ -17,11 +17,16 @@ class ProductServiceImpl(
         return this.readJson();
     }
 
+    override fun get(id: String): Product? {
+        val list = this.readJson();
+        return list.find { id.contentEquals(it.id) }
+    }
+
     private fun readJson(): List<Product> {
-        val json: String = File("backend/src/main/resources/products.json").readText(Charsets.UTF_8)
 //        val resource: Resource = ClassPathResource("classpath:products.json")
 //        val file = resource.file
 //        val json = file.readText()
+        val json: String = File("backend/src/main/resources/products.json").readText(Charsets.UTF_8)
         return mapper.readValue<List<Product>>(json)
     }
 
