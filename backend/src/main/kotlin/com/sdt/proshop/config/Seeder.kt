@@ -15,6 +15,7 @@ class Seeder(
     private val mapper: ObjectMapper,
     private val productRepository: ProductRepository
 ): ApplicationListener<ContextRefreshedEvent> {
+
     private val log = LoggerFactory.getLogger(Seeder::class.java)
 
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
