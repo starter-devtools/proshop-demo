@@ -7,8 +7,7 @@ spring:
       max-file-size: 50MB
   data:
     mongodb:
-      uri: mongodb://docker:docker@localhost:27017/proshop
-    database: proshop
+      uri: mongodb://docker:docker@localhost:27017/proshop?retryWrites=true&w=majority&authSource=admin
 
 #  mail:
 #    host: "${server.host}"

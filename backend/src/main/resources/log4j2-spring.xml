@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-    <property name="applicationName">${spring:spring.application.name}</property>
+<!--    <Property name="applicationName">${spring:spring.application.name}</Property>-->
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">

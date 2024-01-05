@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
 @Configuration
-@EnableMongoRepositories
+@EnableMongoRepositories("com.sdt.proshop.repositories")
 class AppConfig {
 
     @Bean

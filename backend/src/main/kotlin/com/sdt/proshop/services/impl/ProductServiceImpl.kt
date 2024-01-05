@@ -15,4 +15,10 @@ class ProductServiceImpl(
     override fun get(id: String): Product? = repository.findById(id)
         .orElseThrow {IllegalArgumentException("(Product id=$id) not found.")}
 
+    override fun saveAll(products: Collection<Product>) {
+        if (products.isEmpty()) {
+            return
+        }
+        repository.saveAll(products)
+    }
 }

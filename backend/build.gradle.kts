@@ -29,12 +29,16 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web") {
-        exclude(group = "ch.qos.logback", module = "logback-classic")
+configurations {
+    all {
         exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
+        exclude(group = "ch.qos.logback", module = "logback-classic")
+        exclude(module = "junit")
     }
+}
 
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
 //    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -44,15 +48,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(module = "junit")
         exclude("org.junit.jupiter:junit-vintage-engine")
         exclude(module = "mockito-core")
         exclude(module = "mockito-junit-jupiter")
-        exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
     }
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("com.ninja-squad:springmockk:4.0.2") {
-        exclude(module = "junit")
         exclude("org.jetbrains:annotations")
     }
     testImplementation("org.junit.jupiter:junit-jupiter-params")

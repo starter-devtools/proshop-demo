@@ -37,6 +37,7 @@ bin/
 *.ipr
 /out
 out/**
+logs
 
 ### NetBeans ###
 /nbproject/private/

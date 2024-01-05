@@ -7,4 +7,6 @@ interface ProductService {
     fun list(): List<Product>
     fun get(id: String): Product?
 
+    fun saveAll(products: Collection<Product>)
+
 }
