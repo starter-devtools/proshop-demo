@@ -34,10 +34,6 @@ server:
     include-binding-errors: always
   port: 8080
 
-api:
-  version:
-    one: "/api/v1"
-
 cors:
   allowed-origins: "*"
   allowed-methods: "*"

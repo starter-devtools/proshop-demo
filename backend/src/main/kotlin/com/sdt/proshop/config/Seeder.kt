@@ -31,6 +31,6 @@ class Seeder(
         val json = file.readText()
 
         val products = mapper.readValue<List<Product>>(json)
-        productService.saveAll(products)
+//        productService.saveAll(products)
     }
 }
