@@ -4,14 +4,14 @@ import { ProductProps } from '../common/PropTypes';
 import { Link } from 'react-router-dom';
 
 export const Product: FunctionComponent<ProductProps> = (props) => {
-  const {_id, image, name, price} = props.product;
+  const {id, image, name, price} = props.product;
   return (
     <Card className='my-3 p-3 rounded'>
-        <Link to={`/product/${_id}`}>
+        <Link to={`/product/${id}`}>
             <CardImg src={image} variant='top'/>
         </Link>
         <CardBody>
-            <Link to={`/product/${_id}`}>
+            <Link to={`/product/${id}`}>
                 <CardTitle as='div'>
                     <strong>{name}</strong>
                 </CardTitle>

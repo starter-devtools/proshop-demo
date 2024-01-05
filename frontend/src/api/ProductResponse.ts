@@ -1,5 +1,5 @@
 export interface ProductResponse {
-    _id: string;
+    id: string;
     name: string;
     image: string;
     description: string;
@@ -12,7 +12,7 @@ export interface ProductResponse {
 }
 
 export const initialProduct = {
-    _id: '',
+    id: '',
     name: '',
     image: '',
     description: '',
