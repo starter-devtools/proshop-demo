@@ -9,6 +9,8 @@ import {
   Route,
   RouterProvider
   } from 'react-router-dom';
+import {store} from "./store";
+import {Provider} from "react-redux";  
 import {HomePage} from './pages/HomePage';
 import { ProductPage } from './pages/ProductPage';
 
@@ -24,8 +26,11 @@ const router = createBrowserRouter(
   )
 );
 
+//wrap the app in the redux store provider
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <Provider store={store}> 
+      <RouterProvider router={router}/>
+    </Provider>
   </React.StrictMode>
 );
