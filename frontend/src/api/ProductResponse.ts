@@ -22,4 +22,4 @@ export const initialProduct = {
     countInStock: 0,
     rating: 0,
     numReviews: 0
-  };
+};
