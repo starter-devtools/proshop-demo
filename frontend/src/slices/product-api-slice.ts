@@ -5,7 +5,7 @@ import { ProductResponse } from "../api/ProductResponse";
 /**
  * Make API requests using redux tools.
  */
-export const productsApiSlice = apiSlice.injectEndpoints({
+const productsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         listProducts: builder.query<ProductResponse[], string>({
             query: () => ({
