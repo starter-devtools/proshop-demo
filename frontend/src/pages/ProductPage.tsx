@@ -1,30 +1,29 @@
-import {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem } from "react-bootstrap";
 import {Rating} from "../components/Rating";
-import axios from "axios";
-import { ProductResponse, initialProduct } from "../api/ProductResponse";
+import { useGetProductDetailsQuery } from '../slices/product-api-slice';
+import { Loader } from "../components/Loader";
+import { Message } from "../components/Message";
 
 export const ProductPage = () => {
-  const [product, setProduct] = useState<ProductResponse>(initialProduct);
-
   const { id: productId } = useParams();
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/${productId}`);
-      setProduct(data);
-    };
-    fetchProduct();
-  }, [productId]); //re-render component if different ID
+  const {data: product, isLoading, error} = useGetProductDetailsQuery(productId!);
 
   return <>
     <Link className="btn btn-light my-3" to='/'>Go Back</Link>
+    { product && 
     <Row>
         <Col md={5}>
-            <Image src={product.image} alt={product?.name} fluid/>
+            <Image src={product.image} alt={product.name} fluid/>
         </Col>
-        
+
+        {isLoading 
+        ? (<Loader />) : error 
+        ? (<Message variant="danger">{error?.data?.message || error?.error}</Message>)
+        : 
+        ( 
+        <>
         <Col md={4}>
             <ListGroup variant="flush">
                 <ListGroupItem>
@@ -64,6 +63,8 @@ export const ProductPage = () => {
                 </ListGroup>
             </Card>
         </Col>
-    </Row>
+        </>
+        )}
+    </Row>}
   </>;
 };

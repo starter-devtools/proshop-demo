@@ -13,9 +13,9 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             }),
             keepUnusedDataFor: 5 // keep data cached until the component changes.
         }),
-        getProductById: builder.query<ProductResponse, string>({
+        getProductDetails: builder.query<ProductResponse, string>({
             query: (productId) => ({
-                url: `PRODUCTS_URL/${productId}`
+                url: `${PRODUCTS_URL}/${productId}`
             }),
             keepUnusedDataFor: 5
         }),
@@ -23,4 +23,4 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 });
 
 //Export the GET request as a hook
-export const { useListProductsQuery } = productsApiSlice;
+export const { useListProductsQuery, useGetProductDetailsQuery } = productsApiSlice;
