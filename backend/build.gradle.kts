@@ -33,7 +33,7 @@ configurations {
     all {
         exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
         exclude(group = "ch.qos.logback", module = "logback-classic")
-        exclude(module = "junit")
+//        exclude(module = "junit")
     }
 }
 
@@ -48,14 +48,13 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-//    implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.3.1")
-
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.jupiter:junit-vintage-engine")
         exclude(module = "mockito-core")
+        exclude(module = "junit")
         exclude(module = "mockito-junit-jupiter")
     }
-    testImplementation("org.springframework.boot:spring-security-test")
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("com.ninja-squad:springmockk:4.0.2") {
         exclude("org.jetbrains:annotations")

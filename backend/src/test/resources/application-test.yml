@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://docker:docker@localhost:27018/proshop-it?retryWrites=true&w=majority&authSource=admin

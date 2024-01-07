@@ -22,7 +22,8 @@ class Seeder(
 
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
         log.debug("In SeedData.onApplicationEvent()");
-        loadProducts()
+//        loadProducts()
+//        loadUsers()
     }
 
     private fun loadProducts() {
