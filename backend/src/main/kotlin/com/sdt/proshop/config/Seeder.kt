@@ -3,7 +3,7 @@ package com.sdt.proshop.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.sdt.proshop.models.Product
-import com.sdt.proshop.repositories.ProductRepository
+import com.sdt.proshop.security.models.User
 import com.sdt.proshop.services.ProductService
 import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationListener
@@ -22,15 +22,24 @@ class Seeder(
 
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
         log.debug("In SeedData.onApplicationEvent()");
-//        readJson()
+        loadProducts()
     }
 
-    private fun readJson() {
-        val resource: Resource = ClassPathResource("products.json")
-        val file = resource.file
-        val json = file.readText()
+    private fun loadProducts() {
+        val json = readJson("products")
+        val products = mapper.readValue<List<Product>>(json);
+        productService.saveAll(products)
+    }
 
-        val products = mapper.readValue<List<Product>>(json)
+    private fun loadUsers() {
+        val json = readJson("users")
+        val products = mapper.readValue<List<User>>(json);
 //        productService.saveAll(products)
+    }
+
+    private fun readJson(fileName: String): String {
+        val resource: Resource = ClassPathResource("data/${fileName}.json")
+        val file = resource.file
+        return file.readText()
     }
 }

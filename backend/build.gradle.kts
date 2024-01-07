@@ -43,24 +43,28 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+//    implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.3.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.jupiter:junit-vintage-engine")
         exclude(module = "mockito-core")
         exclude(module = "mockito-junit-jupiter")
     }
+    testImplementation("org.springframework.boot:spring-security-test")
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("com.ninja-squad:springmockk:4.0.2") {
         exclude("org.jetbrains:annotations")
     }
     testImplementation("org.junit.jupiter:junit-jupiter-params")
 
-//    testImplementation("org.springframework.boot:spring-boot-testcontainers")
-//    testImplementation("org.testcontainers:junit-jupiter")
-//    testImplementation("org.testcontainers:mongodb")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:mongodb")
 }
 
 tasks.getByName<BootRun>("bootRun") {
