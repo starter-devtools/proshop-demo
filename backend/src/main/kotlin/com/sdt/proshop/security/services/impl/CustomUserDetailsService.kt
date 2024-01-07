@@ -1,4 +1,4 @@
-package com.sdt.proshop.security.services
+package com.sdt.proshop.security.services.impl
 
 import com.sdt.proshop.security.repositories.UserRepository
 import org.springframework.security.core.GrantedAuthority

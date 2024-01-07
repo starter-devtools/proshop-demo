@@ -2,6 +2,7 @@ package com.sdt.proshop.security.models
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -10,16 +11,22 @@ import java.time.Instant
 @Document("users")
 class User(
     @Id val id: String? = null,
-    var email: String,
+    @Indexed(name = "_email_", unique = true) var email: String,
     var name: String,
-    @get:JvmName("password")
-    var password: String,
+    @get:JvmName("password") var password: String,
     var isAdmin: Boolean = false,
     var userRoles: MutableSet<UserRole> = mutableSetOf(),
     val createdAt: Instant = Instant.now(),
     var updatedAt: Instant? = null,
     @Version val version: Int = 0
 ): UserDetails {
+
+    constructor(userDto: UserDto): this(
+        email = userDto.email,
+        name = userDto.name,
+        password = userDto.password,
+        isAdmin = userDto.isAdmin
+    )
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = this.userRoles
 
