@@ -10,9 +10,12 @@ import java.time.Instant
 @Document("users")
 class User(
     @Id val id: String? = null,
-    private var username: String,
-    private var password: String,
-    private var userRoles: MutableSet<UserRole> = mutableSetOf(),
+    var email: String,
+    var name: String,
+    @get:JvmName("password")
+    var password: String,
+    var isAdmin: Boolean = false,
+    var userRoles: MutableSet<UserRole> = mutableSetOf(),
     val createdAt: Instant = Instant.now(),
     var updatedAt: Instant? = null,
     @Version val version: Int = 0
@@ -22,7 +25,7 @@ class User(
 
     override fun getPassword() = this.password
 
-    override fun getUsername() = this.username
+    override fun getUsername() = this.email
 
     override fun isAccountNonExpired() = false
 

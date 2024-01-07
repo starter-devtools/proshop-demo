@@ -9,21 +9,6 @@ class TestContainersIT: AbstractTestContainers() {
 
 //    @Autowired
 //    protected lateinit var mongoTemplate: MongoTemplate
-
-    companion object {
-        @JvmStatic
-        @BeforeAll
-        fun beforeAll() {
-            mongoDBContainer.start()
-        }
-
-        @JvmStatic
-        @AfterAll
-        fun afterAll() {
-            mongoDBContainer.stop()
-        }
-    }
-
     @Test
     fun test() {
         assertThat(mongoDBContainer.isCreated).isTrue()

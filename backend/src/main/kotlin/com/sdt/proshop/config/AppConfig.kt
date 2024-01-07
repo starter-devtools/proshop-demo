@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.convert.MongoCustomConversions
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
 @Configuration
-@EnableMongoRepositories("com.sdt.proshop.repositories")
+@EnableMongoRepositories(value = ["com.sdt.proshop.repositories", "com.sdt.proshop.security.repositories"])
 @EnableMongoAuditing
 class AppConfig {
 

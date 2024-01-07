@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 
 @Service
-class MongoAuthUserDetailsService(
+class CustomUserDetailsService(
     private val userRepository: UserRepository
 ): UserDetailsService {
 
@@ -21,7 +21,7 @@ class MongoAuthUserDetailsService(
             authorities.add(SimpleGrantedAuthority(it.authority))
         }
 
-        return User(user.username, user.password, authorities)
+        return User(user.email, user.password, authorities)
     }
 
 }
