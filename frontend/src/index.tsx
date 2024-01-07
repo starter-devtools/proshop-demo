@@ -13,6 +13,7 @@ import {store} from "./store";
 import {Provider} from "react-redux";  
 import {HomePage} from './pages/HomePage';
 import { ProductPage } from './pages/ProductPage';
+import { CartPage } from './pages/CartPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<App />}>
       <Route index path='/' element={<HomePage/>} />
       <Route path='/product/:id' element={<ProductPage/>} />
+      <Route path='/cart' element={<CartPage/>} />
     </Route>
   )
 );

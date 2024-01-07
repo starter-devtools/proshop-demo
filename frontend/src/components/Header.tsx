@@ -1,10 +1,14 @@
 import { FunctionComponent } from 'react'
-import { Container, Nav, NavLink, Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from 'react-bootstrap';
+import { Badge, Container, Nav, NavLink, Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 import { LinkContainer } from "react-router-bootstrap";
+import { useSelector } from 'react-redux';
+import { CartResponse } from '../api/CartResponse';
 
 export const Header: FunctionComponent = () => {
+    const { cartItems } = useSelector((state) => state.cart);
+
   return (
     <header>
         <Navbar bg='dark' variant='dark' expand='md' collapseOnSelect>
@@ -20,8 +24,14 @@ export const Header: FunctionComponent = () => {
                     <Nav className='ms-auto'>
                         <LinkContainer to='/cart'>
                             <NavLink>
-                                <FaShoppingCart/>
-                                Cart
+                                <FaShoppingCart/> Cart
+                                {
+                                    cartItems.length > 0 && (
+                                        <Badge pill bg='success' style={{marginLeft: '5px'}}>
+                                            { cartItems.reduce((a, c) => a + c.quantity, 0)}
+                                        </Badge>
+                                    )
+                                }
                             </NavLink>
                         </LinkContainer>
                         <LinkContainer to='/login'>
