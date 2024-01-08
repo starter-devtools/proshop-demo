@@ -6,10 +6,11 @@ import com.sdt.proshop.security.models.UserDto
 interface AdminService {
 
     fun list(): List<User>
+    fun getById(id: String): User?
     fun getByEmail(email: String): User?
 
     fun update(userDto: UserDto)
 
-    fun delete(email: String)
+    fun delete(id: String)
 
 }

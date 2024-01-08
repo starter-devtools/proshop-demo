@@ -13,7 +13,7 @@ class User(
     @Id val id: String? = null,
     @Indexed(name = "_email_", unique = true) var email: String,
     var name: String,
-    @get:JvmName("password") var password: String,
+    var credentials: String,
     var isAdmin: Boolean = false,
     var userRoles: MutableSet<UserRole> = mutableSetOf(),
     val createdAt: Instant = Instant.now(),
@@ -22,15 +22,15 @@ class User(
 ): UserDetails {
 
     constructor(userDto: UserDto): this(
-        email = userDto.email,
-        name = userDto.name,
-        password = userDto.password,
+        email = userDto.email!!,
+        name = userDto.name!!,
+        credentials = userDto.password!!,
         isAdmin = userDto.isAdmin
     )
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = this.userRoles
 
-    override fun getPassword() = this.password
+    override fun getPassword() = this.credentials
 
     override fun getUsername() = this.email
 

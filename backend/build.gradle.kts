@@ -48,6 +48,12 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+    implementation("jakarta.validation:jakarta.validation-api")
+
+    implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+    implementation("io.jsonwebtoken:jjwt-impl:0.12.3")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.12.3")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.jupiter:junit-vintage-engine")
         exclude(module = "mockito-core")

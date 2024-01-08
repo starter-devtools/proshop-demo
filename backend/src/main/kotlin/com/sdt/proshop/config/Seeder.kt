@@ -42,7 +42,7 @@ class Seeder(
         val json = readJson("users")
         val users = mapper.readValue<List<User>>(json);
         users.forEach {
-            it.password = this.passwordEncoder.encode(it.password)
+            it.credentials = this.passwordEncoder.encode(it.password)
             it.userRoles = if (it.isAdmin) {
               mutableSetOf(UserRole(Role("ROLE_ADMIN")))
             } else {

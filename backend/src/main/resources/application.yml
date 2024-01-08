@@ -9,6 +9,14 @@ spring:
     mongodb:
       uri: mongodb://docker:docker@localhost:27017/proshop?retryWrites=true&w=majority&authSource=admin
 
+app:
+  jwt:
+    secret: 236229a6df55cd125ee5ad2c3318bc1a497b2ed94b1d1f3a2d4398639d3862fb=
+    expiration-millis: 604800000
+# SHA256 encode(proshop)
+# 1day in ms
+
+#
 #  mail:
 #    host: "${server.host}"
 #    port: 1025
