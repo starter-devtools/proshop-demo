@@ -3,7 +3,9 @@ package com.sdt.proshop.security.config
 import com.sdt.proshop.exceptions.ProShopException
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
@@ -21,6 +23,8 @@ class JwtTokenProvider {
 
     @Value("\${app.jwt.refresh-millis}")
     private lateinit var jwtRefresh: String
+
+    val ignoredTokens: MutableSet<String> = mutableSetOf()
 
     /**
      * Creates a JWT
@@ -43,6 +47,16 @@ class JwtTokenProvider {
             .and()
             .signWith(secretKey())
             .compact()
+    }
+
+    /**
+     * Cancels a token
+     * @param request the current http request
+     */
+    fun removeToken(request: HttpServletRequest) {
+        val authHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
+        val jwt = authHeader.substringAfter("Bearer ")
+        ignoredTokens += (jwt)
     }
 
     /**
@@ -73,7 +87,7 @@ class JwtTokenProvider {
                 .parse(jwt)
 
             //If no exception occurs during parsing, then the JWT is valid
-            return !isExpired(jwt)
+            return !this.isExpired(jwt) && !this.isIgnored(jwt)
         } catch (ex: Exception) {
             when(ex) {
                 is MalformedJwtException -> throw ProShopException(HttpStatus.UNAUTHORIZED, "Invalid token")
@@ -84,6 +98,12 @@ class JwtTokenProvider {
             }
         }
     }
+
+    /**
+     * Checks if the user has canceled their token.
+     * @return true, if the user has logged out
+     */
+    fun isIgnored(jwt: String): Boolean = this.ignoredTokens.contains(jwt)
 
     private fun getAllClaims(jwt: String): Claims {
         val parser = Jwts.parser()

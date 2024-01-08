@@ -8,6 +8,7 @@ import com.sdt.proshop.security.config.JwtTokenProvider
 import com.sdt.proshop.security.models.*
 import com.sdt.proshop.security.repositories.UserRepository
 import com.sdt.proshop.security.services.AuthService
+import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -69,5 +70,18 @@ class AuthServiceImpl(
 
         //Create the jwt
         return this.jwtTokenProvider.generateToken(authentication)
+    }
+
+    /**
+     * Removes the JWT, and logs out the user
+     * @param request the HTTP request
+     * @return a jwt
+     */
+    override fun logout(request: HttpServletRequest) {
+        this.jwtTokenProvider.removeToken(request)
+
+        //Remove the authenticated user
+        SecurityContextHolder.getContext().authentication.isAuthenticated = false
+        SecurityContextHolder.getContext().authentication = null
     }
 }

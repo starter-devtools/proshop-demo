@@ -3,6 +3,8 @@ package com.sdt.proshop.security.config
 import com.sdt.proshop.security.filters.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
@@ -10,17 +12,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 class SecurityConfig(
-    private val userDetailsService: UserDetailsService,
-    private val authenticationEntryPoint: JwtAuthenticationEntryPoint,
     private val authenticationFilter: JwtAuthenticationFilter
 ) {
 
@@ -37,16 +39,30 @@ class SecurityConfig(
             csrf { disable() }
             authorizeHttpRequests {
                 authorize("/api/**", authenticated)
-//                authorize("/auth/**", permitAll)
                 authorize(anyRequest, permitAll)
             }
             sessionManagement { SessionCreationPolicy.STATELESS } //Disable HTTP Session
-            exceptionHandling { authenticationEntryPoint } //handle JWT exceptions
+            exceptionHandling {
+                JwtAuthenticationEntryPoint()
+            } //handle JWT exceptions
         }
 
         //Check for JWT before authentication
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val config = CorsConfiguration()
+        config.allowedOrigins = listOf("http://localhost:5173", "http://localhost:8080")
+        config.allowedMethods = listOf(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
+            HttpMethod.PATCH.name(), HttpMethod.DELETE.name())
+        config.allowedHeaders = listOf(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE)
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", config)
+        return source
     }
 
 }

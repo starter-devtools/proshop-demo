@@ -44,11 +44,5 @@ server:
     include-binding-errors: always
   port: 8080
 
-cors:
-  allowed-origins: "*"
-  allowed-methods: "*"
-  allowed-headers: "*"
-  exposed-headers: "*"
-
 logging:
   include-application-name: true
