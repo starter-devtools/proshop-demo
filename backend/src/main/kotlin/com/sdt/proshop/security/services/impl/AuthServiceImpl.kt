@@ -1,5 +1,7 @@
 package com.sdt.proshop.security.services.impl
 
+import com.sdt.proshop.constants.ADMIN_ROLE
+import com.sdt.proshop.constants.USER_ROLE
 import com.sdt.proshop.exceptions.DuplicateResourceException
 import com.sdt.proshop.extensions.checkSelf
 import com.sdt.proshop.security.config.JwtTokenProvider
@@ -40,9 +42,9 @@ class AuthServiceImpl(
         )
 
         if (user.isAdmin) {
-            user.userRoles = mutableSetOf(UserRole(Role("ROLE_ADMIN")))
+            user.userRoles = mutableSetOf(Role(ADMIN_ROLE))
         } else {
-            user.userRoles = mutableSetOf(UserRole(Role("ROLE_USER")))
+            user.userRoles = mutableSetOf(Role(USER_ROLE))
         }
 
         this.userRepository.save(user)

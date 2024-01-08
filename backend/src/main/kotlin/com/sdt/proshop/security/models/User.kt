@@ -15,7 +15,7 @@ class User(
     var name: String,
     var credentials: String,
     var isAdmin: Boolean = false,
-    var userRoles: MutableSet<UserRole> = mutableSetOf(),
+    var userRoles: MutableSet<Role> = mutableSetOf(),
     val createdAt: Instant = Instant.now(),
     var updatedAt: Instant? = null,
     @Version val version: Int = 0

@@ -2,10 +2,11 @@ package com.sdt.proshop.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.sdt.proshop.constants.ADMIN_ROLE
+import com.sdt.proshop.constants.USER_ROLE
 import com.sdt.proshop.models.Product
 import com.sdt.proshop.security.models.Role
 import com.sdt.proshop.security.models.User
-import com.sdt.proshop.security.models.UserRole
 import com.sdt.proshop.security.repositories.UserRepository
 import com.sdt.proshop.services.ProductService
 import org.slf4j.LoggerFactory
@@ -44,9 +45,9 @@ class Seeder(
         users.forEach {
             it.credentials = this.passwordEncoder.encode(it.password)
             it.userRoles = if (it.isAdmin) {
-              mutableSetOf(UserRole(Role("ROLE_ADMIN")))
+              mutableSetOf((Role(ADMIN_ROLE)))
             } else {
-              mutableSetOf(UserRole(Role("ROLE_USER")))
+              mutableSetOf((Role(USER_ROLE)))
             }
         }
         this.userRepository.saveAll(users)

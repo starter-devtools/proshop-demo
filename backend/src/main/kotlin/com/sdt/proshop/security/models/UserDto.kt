@@ -11,7 +11,7 @@ class UserDto(
 
     @field:Size(min = 8, message = "Password should have at least 8 characters")
     var password: String?,
-    var isAdmin: Boolean
+    var isAdmin: Boolean = false
 ) {
     constructor(user: User): this(user.name, user.email, user.password, user.isAdmin)
 }

@@ -38,9 +38,9 @@ class JwtAuthenticationFilter(
         val jwt = authHeader!!.extractTokenValue()
 
         //2. validate token
-        if (this.jwtTokenProvider.validateToken(jwt)) {
+        if (this.jwtTokenProvider.isValid(jwt)) {
             //3. extract username from token
-            val email = this.jwtTokenProvider.extractUsername(jwt)
+            val email = this.jwtTokenProvider.extractEmail(jwt)
 
             //4. get user from DB - cache this?
             val userDetails: UserDetails = this.userDetailsService.loadUserByUsername(email)
