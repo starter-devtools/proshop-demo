@@ -9,7 +9,8 @@ interface AdminService {
     fun getById(id: String): User?
     fun getByEmail(email: String): User?
 
-    fun update(userDto: UserDto)
+    fun update(id: String, userDto: UserDto)
+    fun updatePassword(id: String, userDto: UserDto)
 
     fun delete(id: String)
 

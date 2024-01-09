@@ -44,7 +44,7 @@ class SecurityConfig(
             sessionManagement { SessionCreationPolicy.STATELESS } //Disable HTTP Session
             exceptionHandling {
                 JwtAuthenticationEntryPoint()
-            } //handle JWT exceptions
+            } //handle JWT exceptions - TODO: not working!!
         }
 
         //Check for JWT before authentication
@@ -58,7 +58,8 @@ class SecurityConfig(
         config.allowedOrigins = listOf("http://localhost:5173", "http://localhost:8080")
         config.allowedMethods = listOf(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
             HttpMethod.PATCH.name(), HttpMethod.DELETE.name())
-        config.allowedHeaders = listOf(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE)
+        config.allowedHeaders = listOf(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE, HttpHeaders.CACHE_CONTROL)
+        config.exposedHeaders = listOf(HttpHeaders.CONTENT_TYPE)
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", config)

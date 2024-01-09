@@ -1,9 +1,6 @@
 package com.sdt.proshop.exceptions.advice
 
-import com.sdt.proshop.exceptions.DuplicateResourceException
-import com.sdt.proshop.exceptions.MissingTokenException
-import com.sdt.proshop.exceptions.RequestValidationException
-import com.sdt.proshop.exceptions.ResourceNotFoundException
+import com.sdt.proshop.exceptions.*
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -67,7 +64,7 @@ class RestExceptionHandler: ResponseEntityExceptionHandler() {
     }
 
     //Security Exceptions - translate security exceptions to 401
-    @ExceptionHandler(value = [AccessDeniedException::class, MissingTokenException::class])
+    @ExceptionHandler(value = [AccessDeniedException::class, MissingTokenException::class, BadTokenException::class])
     fun handleAccessDeniedException(ex: Exception): ResponseEntity<ApiResponse> {
         log.error(ex.message, ex);
         val responseEntity = buildError(ex.message!!, HttpStatus.UNAUTHORIZED);

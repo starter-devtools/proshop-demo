@@ -1,7 +1,6 @@
 package com.sdt.proshop.constants
 
-const val X_AUTH_USERNAME_HEADER = "X-Auth-Username"
-const val X_AUTH_TOKEN_HEADER = "X-Auth-Header"
+const val BEARER_PREFIX = "Bearer "
 const val DATE_FORMAT = "yyyy-MM-dd"
 const val DATE_TIME_FORMAT = "$DATE_FORMAT HH:mm:ss"
 
