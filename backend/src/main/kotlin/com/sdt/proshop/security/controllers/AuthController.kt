@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -17,17 +18,13 @@ class AuthController(
     private val authService: AuthService
 ) {
 
-    @PostMapping(value = ["/register", "/signup"])
-    fun registration(@RequestBody userDto: UserDto): ResponseEntity<String> {
-        val response = authService.register(userDto)
-        return ResponseEntity(response, HttpStatus.CREATED)
-    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = ["/register"])
+    fun registration(@RequestBody userDto: UserDto): Unit = authService.register(userDto)
 
-    @PostMapping(value = ["/login", "/signin"])
-    fun login(@RequestBody loginDto: LoginDto): ResponseEntity<String> {
-        val response = authService.login(loginDto)
-        return ResponseEntity(response, HttpStatus.ACCEPTED)
-    }
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping(value = ["/login"])
+    fun login(@RequestBody loginDto: LoginDto): String = authService.login(loginDto)
 
     @PostMapping(value = ["/logout", "/signout"])
     fun logout(request: HttpServletRequest): ResponseEntity<Unit> {

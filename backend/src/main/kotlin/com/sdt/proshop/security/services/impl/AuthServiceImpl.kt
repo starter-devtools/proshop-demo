@@ -27,7 +27,7 @@ class AuthServiceImpl(
 
     private val log = LoggerFactory.getLogger(AuthServiceImpl::class.java)
 
-    override fun register(userDto: UserDto): String {
+    override fun register(userDto: UserDto) {
         val email: String = userDto.email.checkSelf()!!
 
         //Check if email already exists
@@ -49,7 +49,6 @@ class AuthServiceImpl(
         }
 
         this.userRepository.save(user)
-        return "${user.email} was successfully registered!"
     }
 
     /**
@@ -69,6 +68,7 @@ class AuthServiceImpl(
         SecurityContextHolder.getContext().authentication = authentication
 
         //Create the jwt
+        //TODO: Add JWT as HTTP-ONly Cookie? Use protected routes in React?
         return this.jwtTokenProvider.generateToken(authentication)
     }
 
@@ -81,7 +81,6 @@ class AuthServiceImpl(
         this.jwtTokenProvider.removeToken(request)
 
         //Remove the authenticated user
-        SecurityContextHolder.getContext().authentication.isAuthenticated = false
-        SecurityContextHolder.getContext().authentication = null
+        SecurityContextHolder.clearContext()
     }
 }

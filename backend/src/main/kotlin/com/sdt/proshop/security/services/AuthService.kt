@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest
 
 interface AuthService {
 
-    fun register(userDto: UserDto): String
+    fun register(userDto: UserDto)
     fun login(loginDto: LoginDto): String
     fun logout(request: HttpServletRequest)
 

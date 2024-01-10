@@ -24,7 +24,7 @@ class JwtTokenProvider {
     @Value("\${app.jwt.refresh-millis}")
     private lateinit var jwtRefresh: String
 
-    val ignoredTokens: MutableSet<String> = mutableSetOf()
+    val canceledTokens: MutableSet<String> = mutableSetOf()
 
     /**
      * Creates a JWT
@@ -56,7 +56,7 @@ class JwtTokenProvider {
     fun removeToken(request: HttpServletRequest) {
         val authHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
         val jwt = authHeader.substringAfter(BEARER_PREFIX)
-        ignoredTokens += (jwt)
+        canceledTokens += (jwt)
     }
 
     /**
@@ -103,7 +103,7 @@ class JwtTokenProvider {
      * Checks if the user has canceled their token.
      * @return true, if the user has logged out
      */
-    fun isIgnored(jwt: String): Boolean = this.ignoredTokens.contains(jwt)
+    fun isIgnored(jwt: String): Boolean = this.canceledTokens.contains(jwt)
 
     private fun getAllClaims(jwt: String): Claims {
         val parser = Jwts.parser()
