@@ -8,7 +8,8 @@ import { LoginResponse } from "../api/UserResponse";
 const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         //Change to Mutation, since we're not fetching data
-        login: builder.mutation<LoginResponse, string>({
+        // login: builder.mutation<string, LoginResponse>({
+        login: builder.mutation({
             query: (data) => ({
                 url: `${AUTH_URL}/login`,
                 method: 'POST',

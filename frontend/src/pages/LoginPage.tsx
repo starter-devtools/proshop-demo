@@ -1,15 +1,55 @@
-import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Row, Col, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
 import { FormContainer } from '../components/FormContainer'
+import { Message } from '../components/Message'
+import { Loader } from '../components/Loader'
+
+import { useLoginMutation } from '../slices/user-api-slice';
+import { setCredentials } from '../slices/auth-slice';
+import { toast } from 'react-toastify';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch(); //send to state
+  const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth); //get from state
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search); //get the URL search params
+  const redirect = sp.get('redirect') || '/'; //if redirect is in the URL path
+
+//   useEffect(() => {
+//     //If the user is logged in, redirect them.
+//     if (userInfo.accessToken) {
+//       navigate(redirect);
+//     }
+//   }, [navigate, redirect, userInfo]);
   
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log('submit');
+    try {
+        const res = await login({ email, password });
+        console.log(res);
+
+        const userInfo = {
+            email,
+            password,
+            accessToken: res
+        };
+        console.log(userInfo);
+
+        dispatch(setCredentials({ ...userInfo }));
+        navigate(redirect);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
   }
 
   return (
@@ -37,16 +77,18 @@ export const LoginPage = () => {
                 ></FormControl>
             </FormGroup>
 
-            <FormGroup className='mt-2'>
-                <Button type='submit' variant='primary'>
-                    Sign In
-                </Button>
-            </FormGroup>
+            <Button disabled={isLoading} type='submit' variant='primary'>
+                Sign In
+            </Button>
+
+            {isLoading && <Loader />}
 
             <Row className='py-3'>
                 <Col>
                     New Customer? 
-                    <Link to='/register'> Register</Link>
+                    <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
+                        Register
+                    </Link>
                 </Col>
             </Row>
         </Form>
