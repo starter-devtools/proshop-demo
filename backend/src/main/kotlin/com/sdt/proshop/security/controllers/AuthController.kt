@@ -4,14 +4,11 @@ import com.sdt.proshop.security.models.LoginDto
 import com.sdt.proshop.security.models.UserDto
 import com.sdt.proshop.security.services.AuthService
 import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/auth")
@@ -25,8 +22,13 @@ class AuthController(
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping(value = ["/login"])
-    fun login(@RequestBody loginDto: LoginDto): ResponseEntity<Unit> {
-        val jwt: String = this.authService.login(loginDto) //TODO: sanitize this
+    fun login(@RequestBody loginDto: LoginDto, response: HttpServletResponse): ResponseEntity<Unit> {
+        val jwt: String = this.authService.login(loginDto)
+
+//        val cookie = Cookie("accessToken", jwt);
+//        cookie.isHttpOnly = true
+//        response.addCookie(cookie)
+
         val headers = HttpHeaders()
         headers.setBearerAuth(jwt)
         return ResponseEntity.ok().headers(headers).build()
