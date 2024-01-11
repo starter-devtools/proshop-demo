@@ -25,25 +25,22 @@ export const LoginPage = () => {
   const sp = new URLSearchParams(search); //get the URL search params
   const redirect = sp.get('redirect') || '/'; //if redirect is in the URL path
 
-//   useEffect(() => {
-//     //If the user is logged in, redirect them.
-//     if (userInfo.accessToken) {
-//       navigate(redirect);
-//     }
-//   }, [navigate, redirect, userInfo]);
+  useEffect(() => {
+    //If the user is logged in, redirect them.
+    if (userInfo?.accessToken?.data) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
   
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
         const res = await login({ email, password });
-        console.log(res);
-
         const userInfo = {
             email,
             password,
             accessToken: res
         };
-        console.log(userInfo);
 
         dispatch(setCredentials({ ...userInfo }));
         navigate(redirect);
