@@ -2,13 +2,13 @@ import {useState, useEffect} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Row, Col, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
-import { FormContainer } from '../components/FormContainer'
-import { Message } from '../components/Message'
+import { FormContainer } from '../components/FormContainer';
 import { Loader } from '../components/Loader'
 
 import { useLoginMutation } from '../slices/user-api-slice';
 import { setCredentials } from '../slices/auth-slice';
 import { toast } from 'react-toastify';
+import { AuthResponse } from '../api/UserResponse'
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -36,10 +36,10 @@ export const LoginPage = () => {
     e.preventDefault();
     try {
         const res = await login({ email, password });
-        const userInfo = {
+        const userInfo: AuthResponse = {
             email,
             password,
-            accessToken: res
+            accessToken: res.data
         };
 
         dispatch(setCredentials({ ...userInfo }));

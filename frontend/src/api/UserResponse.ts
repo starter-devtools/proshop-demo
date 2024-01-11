@@ -1,7 +1,10 @@
-
 export interface LoginResponse {
     email: string;
     password: string;
+}
+
+export interface AuthResponse extends LoginResponse {
+    accessToken: string;
 }
 
 export interface SignUpResponse {

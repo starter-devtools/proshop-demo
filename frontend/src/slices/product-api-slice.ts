@@ -15,11 +15,7 @@ const productsApiSlice = apiSlice.injectEndpoints({
         }),
         getProductDetails: builder.query<ProductResponse, string>({
             query: (productId) => ({
-                url: `${PRODUCTS_URL}/${productId}`,
-                //TODO: add jwt here as request header...
-                headers: {
-
-                }
+                url: `${PRODUCTS_URL}/${productId}`
             }),
             keepUnusedDataFor: 5
         }),
