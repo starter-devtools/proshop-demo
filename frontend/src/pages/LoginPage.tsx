@@ -36,9 +36,9 @@ export const LoginPage = () => {
     e.preventDefault();
     try {
         const res = await login({ email, password });
+        //TODO: bring in name and isAdmin from the BE
         const userInfo: AuthResponse = {
             email,
-            password,
             accessToken: res.data
         };
 
