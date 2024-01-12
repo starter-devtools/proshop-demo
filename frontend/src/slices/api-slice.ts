@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
     //Add headers to each API request.
     prepareHeaders: (headers, {getState}) => {
-        const token = (getState() as RootState).auth?.userInfo?.accessToken.data;
+        const token = (getState() as RootState).auth?.userInfo?.accessToken?.data;
         if (token) {
             //TODO: Add this as an http-only cookie, and not an auth header?
             //Add JWT to each request.

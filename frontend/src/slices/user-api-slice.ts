@@ -1,6 +1,6 @@
 import { apiSlice } from "./api-slice";
-import { AUTH_URL, USERS_URL } from "../constants";
-import { LoginResponse } from "../api/UserResponse";
+import { AUTH_URL } from "../constants";
+import { LoginResponse, SignUpResponse } from "../api/UserResponse";
 import { FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 
 /**
@@ -8,6 +8,13 @@ import { FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
  */
 const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        register: builder.mutation<string, SignUpResponse>({
+            query: (data) => ({
+                url: `${AUTH_URL}/register`,
+                method: 'POST',
+                body: data
+            }),
+        }),
         //Change to Mutation, since we're not fetching data
         // login: builder.mutation<string, LoginResponse>({
         login: builder.mutation<string, LoginResponse>({
@@ -38,4 +45,4 @@ const usersApiSlice = apiSlice.injectEndpoints({
 });
 
 //Export the GET request as a hook
-export const { useLoginMutation, useLogoutMutation } = usersApiSlice;
+export const { useRegisterMutation, useLoginMutation, useLogoutMutation } = usersApiSlice;

@@ -52,7 +52,7 @@ export const Header: FunctionComponent = () => {
                                 }
                             </NavLink>
                         </LinkContainer>
-                        {userInfo ? (
+                        {userInfo?.accessToken?.data ? (
                             <>
                                 <NavDropdown title={userInfo.email} id='email'>
                                     <LinkContainer to='/profile'>

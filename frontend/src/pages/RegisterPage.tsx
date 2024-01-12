@@ -4,19 +4,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Row, Col, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
 import { FormContainer } from '../components/FormContainer';
 import { Loader } from '../components/Loader'
-
-import { useLoginMutation } from '../slices/user-api-slice';
+import { useRegisterMutation } from '../slices/user-api-slice';
 import { setCredentials } from '../slices/auth-slice';
 import { toast } from 'react-toastify';
+import { AuthUserResponse } from '../api/UserResponse'
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const dispatch = useDispatch(); //send to state
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const { userInfo } = useSelector((state) => state.auth); //get from state
 
@@ -33,11 +35,17 @@ export const LoginPage = () => {
   
   const submitHandler = async (e) => {
     e.preventDefault();
-    try {
-        const res = await login({ email, password });
+
+    if(password !== confirmPassword) {
+      toast.error("Password don't match!");
+    } else {
+      try {
+        const res = await register({ name, email, password, isAdmin: true });
         //TODO: bring in name and isAdmin from the BE
-        const userInfo = {
+        const userInfo: AuthUserResponse = {
+            name,
             email,
+            isAdmin: false,
             accessToken: res.data
         };
 
@@ -46,13 +54,26 @@ export const LoginPage = () => {
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
+    }
+
+
   }
 
   return (
     <FormContainer>
-        <h1>Sign In</h1>
+        <h1>Sign Up</h1>
 
         <Form onSubmit={submitHandler}>
+            <FormGroup controlId='name' className='my-3'>
+                <FormLabel>Name</FormLabel>
+                <FormControl
+                    type='text'
+                    placeholder='Enter name'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                ></FormControl>
+            </FormGroup>
+
             <FormGroup controlId='email' className='my-3'>
                 <FormLabel>Email Address</FormLabel>
                 <FormControl
@@ -73,17 +94,27 @@ export const LoginPage = () => {
                 ></FormControl>
             </FormGroup>
 
+            <FormGroup controlId='confirmPassword' className='my-3'>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl
+                    type='password'
+                    placeholder='Confirm password'
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                ></FormControl>
+            </FormGroup>
+
             <Button disabled={isLoading} type='submit' variant='primary'>
-                Sign In
+                Register
             </Button>
 
             {isLoading && <Loader />}
 
             <Row className='py-3'>
                 <Col>
-                    New Customer? 
-                    <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                        Register
+                    Already have an account? 
+                    <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+                        Login
                     </Link>
                 </Col>
             </Row>

@@ -3,10 +3,6 @@ export interface LoginResponse {
     password: string;
 }
 
-export interface AuthResponse extends LoginResponse {
-    accessToken: string;
-}
-
 export interface SignUpResponse {
     name: string;
     email: string;
@@ -15,7 +11,11 @@ export interface SignUpResponse {
 }
 
 export interface UserResponse {
-    name: string;
+    name?: string;
     email: string;
-    isAdmin: boolean;
+    isAdmin?: boolean;
+}
+
+export interface AuthUserResponse extends UserResponse {
+    accessToken: string;
 }
